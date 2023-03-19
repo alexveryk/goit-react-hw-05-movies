@@ -8,8 +8,6 @@ export const Credits = () => {
 
   const { movieiId } = useParams();
 
-  // console.log('Credits', movieiId);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
