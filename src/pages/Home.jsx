@@ -1,5 +1,6 @@
 import { getTrending } from 'components/API/api';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -36,14 +37,9 @@ export const Home = () => {
       {loading && <p>Loading...</p>}
       <ul>
         {movies.map(movie => {
-          console.log(movie);
           return (
             <li key={movie.id}>
-              <img
-                // src={`https://image.tmdb.org/t/p/w200/${movie.backdrop_path}`}
-                alt={movie.title}
-              />
-              {movie.title}
+              <Link to={`movies/${movie.id}`}>{movie.title}</Link>
             </li>
           );
         })}
