@@ -14,7 +14,6 @@ export const Credits = () => {
         setLoading(true);
         const response = await getCedits(movieiId);
 
-        console.log('Credits response', response);
         setCredits(response.data.cast);
       } catch (error) {
         console.log(error);
