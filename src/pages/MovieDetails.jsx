@@ -1,10 +1,13 @@
-import { Link, Outlet, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import { getMovie } from 'components/API/api';
 
 export const MovieDetails = () => {
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState({});
+
+  const location = useLocation();
+  const backLinkref = useRef(location.state?.from ?? '/movies');
 
   const { movieiId } = useParams();
 
@@ -29,22 +32,28 @@ export const MovieDetails = () => {
   return (
     <div>
       {loading && <p>Loading...</p>}
-      <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt="" />
-      <h1>{`${movie.original_title}`}</h1>
-      <p>{`User score: ${movie.popularity}`}</p>
-      <h2>Overview</h2>
-      <p>{`${movie.overview}`}</p>
-      <h3>Genres</h3>
-      <p></p>
-      <ul>
-        <li>
-          <Link to="credits">credits</Link>
-        </li>
-        <li>
-          <Link to="reviews">reviews</Link>
-        </li>
-      </ul>
-      <Outlet />
+      <Link to={backLinkref.current}>Go back</Link>
+      <div>
+        <img
+          src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+          alt=""
+        />
+        <h1>{`${movie.original_title}`}</h1>
+        <p>{`User score: ${movie.popularity}`}</p>
+        <h2>Overview</h2>
+        <p>{`${movie.overview}`}</p>
+        <h3>Genres</h3>
+        <p></p>
+        <ul>
+          <li>
+            <Link to="credits">credits</Link>
+          </li>
+          <li>
+            <Link to="reviews">reviews</Link>
+          </li>
+        </ul>
+        <Outlet />
+      </div>
     </div>
   );
 };
