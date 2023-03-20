@@ -36,3 +36,10 @@ export const getReviews = async id => {
   );
   return response;
 };
+
+export const searchMovies = async name => {
+  const response = await axios.get(
+    `${BASE_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${name}&page=1&include_adult=false`
+  );
+  return response;
+};
