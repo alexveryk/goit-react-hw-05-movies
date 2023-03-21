@@ -1,32 +1,37 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { searchMovies } from 'components/API/api';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import {
+  List,
+  ListItem,
+  StyledLink,
+  Form,
+  InputForm,
+  Btn,
+} from './Movies.styled';
 
-export const Movies = () => {
+const Movies = () => {
   const [loading, setLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams({});
   const [movies, setMovies] = useState([]);
 
   const location = useLocation();
+  const query = searchParams.get('query');
 
   const hendleSubmit = event => {
     event.preventDefault();
 
-    const searchQuery = event.target.search.value;
-
-    if (!searchQuery) {
-      setSearchParams({});
-      return;
-    }
+    setMovies([]);
 
     setSearchParams({ query: event.target.search.value });
     event.target.reset();
   };
 
-  const query = searchParams.get('query');
-
   useEffect(() => {
+    if (!query) {
+      return;
+    }
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -48,22 +53,24 @@ export const Movies = () => {
 
   return (
     <div>
-      <form onSubmit={hendleSubmit}>
-        <input type="text" name="search" />
-        <button type="submit">Search</button>
-      </form>
+      <Form onSubmit={hendleSubmit}>
+        <InputForm type="text" name="search" />
+        <Btn type="submit">Search</Btn>
+      </Form>
       {loading && <p>Loading...</p>}
       {Boolean(query) && (
-        <ul>
+        <List>
           {movies.map(movie => (
-            <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+            <ListItem key={movie.id}>
+              <StyledLink to={`/movies/${movie.id}`} state={{ from: location }}>
                 {movie.title}
-              </Link>
-            </li>
+              </StyledLink>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       )}
     </div>
   );
 };
+
+export default Movies;
