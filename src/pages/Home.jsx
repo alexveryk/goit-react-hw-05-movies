@@ -1,8 +1,8 @@
 import { getTrending } from 'components/API/api';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { MainHeader, List, ListItem, StyledLink } from './Home.styled';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -30,17 +30,19 @@ export const Home = () => {
 
   return (
     <div>
-      <h1>Trending today</h1>
+      <MainHeader>Trending today</MainHeader>
       {loading && <p>Loading...</p>}
-      <ul>
+      <List>
         {movies.map(movie => {
           return (
-            <li key={movie.id}>
-              <Link to={`movies/${movie.id}`}>{movie.title}</Link>
-            </li>
+            <ListItem key={movie.id}>
+              <StyledLink to={`movies/${movie.id}`}>{movie.title}</StyledLink>
+            </ListItem>
           );
         })}
-      </ul>
+      </List>
     </div>
   );
 };
+
+export default Home;
