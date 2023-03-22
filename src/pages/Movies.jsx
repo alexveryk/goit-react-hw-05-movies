@@ -1,7 +1,7 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { searchMovies } from 'components/API/api';
 import { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
+
 import {
   List,
   ListItem,
